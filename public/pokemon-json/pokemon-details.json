@@ -1,0 +1,66 @@
+{
+    "1": {
+        "name": "bulbasaur",
+        "abilities": ["overgrow", "chlorophyll", "another"],
+        "hp": 100,
+        "defense": 32,
+        "attack": 55,
+        "speed": 91 
+    },
+    "2": {
+        "name": "ivysaur",
+        "abilities": ["run away", "flash fire"],
+        "hp": 103,
+        "defense": 12,
+        "attack": 59,
+        "speed": 81 
+    },
+    "3": {
+        "name": "venusaur",
+        "abilities": ["oblivious", "own tempo"],
+        "hp": 33,
+        "defense": 32,
+        "attack": 50,
+        "speed": 85
+    },
+    "4": {
+        "name": "charmeleon",
+        "abilities": ["poison point", "rivalry"],
+        "hp": 321,
+        "defense": 32,
+        "attack": 45,
+        "speed": 44 
+    },
+    "5": {
+        "name": "caterpie",
+        "abilities": ["shed skin"],
+        "hp": 123,
+        "defense": 24,
+        "attack": 65,
+        "speed": 77 
+    },
+    "6": {
+        "name": "pikachu",
+        "abilities": ["compound eyes", "tinted lens"],
+        "hp": 123,
+        "defense": 24,
+        "attack": 65,
+        "speed": 77 
+    },
+    "7": {
+        "name": "raichu",
+        "abilities": ["keen eye", "tangled feet"],
+        "hp": 123,
+        "defense": 24,
+        "attack": 65,
+        "speed": 77 
+    },
+    "8": {
+        "name": "clefable",
+        "abilities": ["hyper cutter", "shell armor"],
+        "hp": 123,
+        "defense": 24,
+        "attack": 65,
+        "speed": 77 
+    }
+}
