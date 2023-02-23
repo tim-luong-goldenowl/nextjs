@@ -4,37 +4,71 @@ import { useRouter } from 'next/router'
 
 import { useEffect, useState } from 'react'
 
-export async function getServerSideProps({params}) {
-    const res = await fetch(`http://localhost:3000/pokemon-json/pokemon-details.json`)
-        .then((r) => r.json())
-        .then((data) =>{
-            return data[params.idd.toString()]
-    })
-  
-    return {
-      props: {
-        pokemon: res
-      }
-    }
-}
-
-export default function Details({pokemon}) {
-//   const [pokemon, setPokemon] = useState(null)
-
-//   const {
-//     query: { id }
-//   } = useRouter();
-
-//   useEffect(() => {
-//     if(id) {
-//         fetch(`http://localhost:3000/pokemon-json/pokemon-details.json`)
+// FOR SSR
+// export async function getServerSideProps({params}) {
+//     const res = await fetch(`http://localhost:3000/pokemon-json/pokemon-details.json`)
 //         .then((r) => r.json())
 //         .then((data) =>{
-//             setPokemon(data[id.toString()])
-//         })
+//             return data[params.id.toString()]
+//     })
+
+//     return {
+//       props: {
+//         pokemon: res
+//       }
 //     }
-    
-//   }, [id])
+// }
+//
+
+// FOR SSG
+// export async function getStaticPaths() {
+//   // const res = await fetch(`http://localhost:3000/pokemon-json/pokemons.json`)
+//   //   .then((r) => r.json())
+//   //   .then((data) => {
+//   //     return data
+//   //   })
+
+//   return {
+//     paths: res.map((pokemon) => ({
+//       params: {id: pokemon.id.toString()}
+//     })),
+//     fallback: false
+//   }
+// }
+
+// export async function getStaticProps({params}) {
+//   // const res = await fetch(`http://localhost:3000/pokemon-json/pokemon-details.json`)
+//   //       .then((r) => r.json())
+//   //       .then((data) =>{
+//   //           return data[params.id.toString()]
+//   //   })
+
+
+//   return {
+//     props: {
+//       pokemon: res
+//     },
+//     revalidate: 10
+//   }
+// }
+
+export default function Details({pokemon}) {
+  const [pokemon, setPokemon] = useState(null)
+
+  const {
+    query: { id }
+  } = useRouter();
+
+  useEffect(() => {
+    if(id) {
+        fetch(`https://nextjs-cyan-zeta-79.vercel.app/pokemon-json/pokemon-details.json`)
+        .then((r) => r.json())
+        .then((data) =>{
+            setPokemon(data[id.toString()])
+        })
+    }
+
+  }, [id])
 
   let pokemonContent = null
   if (pokemon) {
