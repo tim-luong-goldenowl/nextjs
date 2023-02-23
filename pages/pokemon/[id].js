@@ -52,7 +52,7 @@ import { useEffect, useState } from 'react'
 //   }
 // }
 
-export default function Details({pokemon}) {
+export default function Details() {
   const [pokemon, setPokemon] = useState(null)
 
   const {
