@@ -8,8 +8,7 @@ export async function getStaticProps() {
   return {
     props: {
       randomTodo: res
-    },
-    revalidate: 10
+    }
   }
 }
 
