@@ -1,15 +1,11 @@
-.pokemon-list {
-  display: flex;
-  justify-content: space-between;
+@import '~mdb-ui-kit/css/mdb.min.css';
+
+.app-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-.pokemon-element {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.pokemon-details {
-  display: flex;
+.container {
+    flex: 1;
 }
