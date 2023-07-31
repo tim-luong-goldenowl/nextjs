@@ -4,20 +4,29 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { getRequest } from '../../ultils/httpRequests'
 
-export async function getServerSideProps() {
-  const res = await getRequest('/donation-receivers')
+// export async function getServerSideProps() {
+//   const res = await getRequest('/donation-receivers')
+//     .then((data) => {
+//       return data
+//     })
+
+//   return {
+//     props: {
+//       donationReceiverList: res
+//     }
+//   }
+// }
+
+export default function Home() {
+  let [donationReceiverList, setdonationReceiverList] = useState([])
+
+  useEffect(() => {
+    getRequest('/donation-receivers')
     .then((data) => {
-      return data
+      setdonationReceiverList(data)
     })
+  }, [donationReceiverList])
 
-  return {
-    props: {
-      donationReceiverList: res
-    }
-  }
-}
-
-export default function Home({donationReceiverList}) {
   return (
     <>
       <Head>

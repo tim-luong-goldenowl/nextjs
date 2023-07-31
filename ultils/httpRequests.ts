@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 const rootPath = 'http://localhost:3000'
 
 export async function getRequest(path = "") {
@@ -8,7 +10,7 @@ export async function getRequest(path = "") {
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkwMjkzMzI3LCJleHAiOjE2OTAzMDA1Mjd9.TrbB-Ri_t-RcS-gCVyzCn3-PiGv78SHPOVP4AfZadow"
+      "Authorization": getToken()
     },
   });
   return response.json();
@@ -23,8 +25,16 @@ export async function postRequest(path = "", data: BodyInit) {
     body: data,
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkwMjkzMzI3LCJleHAiOjE2OTAzMDA1Mjd9.TrbB-Ri_t-RcS-gCVyzCn3-PiGv78SHPOVP4AfZadow"
+      "Authorization": getToken()
     },
   });
   return response.json();
+}
+
+const getToken = () => {
+  if (typeof window !== 'undefined') {
+    const token = localStorage.getItem('donationAppToken')
+    console.log("!!!!!!!!!!!!", token)
+    return localStorage.getItem('donationAppToken')
+  }
 }

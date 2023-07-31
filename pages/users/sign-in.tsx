@@ -1,10 +1,7 @@
 import { SyntheticEvent, useState } from 'react';
-import styles from '../../styles/users/register.module.scss'
 import { postRequest } from '../../ultils/httpRequests';
 
 export default function Register() {
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -13,12 +10,11 @@ export default function Register() {
         const jsonBody = {
             email,
             password,
-            firstName,
-            lastName
         }
-        const res = await postRequest('/auth/register', JSON.stringify(jsonBody))
+        const res = await postRequest('/auth/signin', JSON.stringify(jsonBody))
             .then((data) => {
-                return data
+                const token = data.token;
+                localStorage.setItem("donationAppToken", 'Bearer ' + token);
             })
             .catch((e) => {
             })
@@ -33,29 +29,11 @@ export default function Register() {
     return (
         <div className="flex min-h-full flex-col items-center justify-center px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Register a new account</h2>
+                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign In</h2>
             </div>
 
             <div className="mt-10 w-2/4 w-2/4 p-12 justify-center bg-white rounded-lg border border-gray-200">
                 <form className="space-y-6" onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">First Name</label>
-                        <div className="mt-2">
-                            <input id="firstName" name="fistName" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                onChange={(e) => setFirstName(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    <div>
-                        <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-gray-900">Last Name</label>
-                        <div className="mt-2">
-                            <input id="lastName" name="lastName" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                onChange={(e) => setLastName(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                         <div className="mt-2">
@@ -77,7 +55,7 @@ export default function Register() {
                     </div>
 
                     <div>
-                        <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign up</button>
+                        <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign In</button>
                     </div>
                 </form>
             </div>
