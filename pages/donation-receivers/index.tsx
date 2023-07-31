@@ -1,31 +1,19 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { getRequest } from '../../ultils/httpRequests'
+import withAuthen from '../auth'
 
-// export async function getServerSideProps() {
-//   const res = await getRequest('/donation-receivers')
-//     .then((data) => {
-//       return data
-//     })
 
-//   return {
-//     props: {
-//       donationReceiverList: res
-//     }
-//   }
-// }
-
-export default function Home() {
+function Index() {
   let [donationReceiverList, setdonationReceiverList] = useState([])
 
   useEffect(() => {
     getRequest('/donation-receivers')
-    .then((data) => {
-      setdonationReceiverList(data)
-    })
-  }, [donationReceiverList])
+      .then((data) => {
+        setdonationReceiverList(data)
+      })
+  }, [])
 
   return (
     <>
@@ -45,3 +33,5 @@ export default function Home() {
     </>
   )
 }
+
+export default withAuthen(Index);
