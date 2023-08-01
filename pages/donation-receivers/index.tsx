@@ -4,11 +4,15 @@ import { useEffect, useState } from 'react'
 import { getRequest } from '../../ultils/httpRequests'
 import withAuthen from '../../components/hoc/auth'
 
-export async function getServerSideProps() {
-  console.log("LLLLLLLLLsandjkasndjkasndjkasnjkd")
-  const res = await getRequest('/donation-receivers')
-    .then((data) => {
+export async function getServerSideProps({req}) {
+  const res = await getRequest('/donation-receivers', {
+      Cookie: req.headers.cookie
+  })
+    .then(({data}) => {
       return data
+    })
+    .catch((e) => {
+      return false
     })
 
   return {
@@ -23,24 +27,26 @@ function Index({donationReceiverList}) {
 
   // useEffect(() => {
   //   getRequest('/donation-receivers')
-  //     .then((data) => {
+  //     .then(({data}) => {
   //       setdonationReceiverList(data)
   //     })
   // }, [])
 
-  return (
-    <>
-      <div className='donation-receiver-list'>
-        {donationReceiverList.map((el) => (
-          <Link href={``} key={el.id}>
-            <div className='pokemon-element'>
-              {el.email}
-            </div>
-          </Link>
-        ))}
-      </div>
-    </>
-  )
+  if(donationReceiverList) {
+    return (
+      <>
+        <div className='donation-receiver-list'>
+          {donationReceiverList.map((el) => (
+            <Link href={``} key={el.id}>
+              <div className='pokemon-element'>
+                {el.email}
+              </div>
+            </Link>
+          ))}
+        </div>
+      </>
+    )
+  }
 }
 
 export default withAuthen(Index);

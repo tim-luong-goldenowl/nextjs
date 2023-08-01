@@ -1,42 +1,50 @@
-import { useEffect } from "react";
+import axios from "axios";
 
 const rootPath = 'http://localhost:3000'
 
-export async function getRequest(path = "") {
-  const response = await fetch(rootPath + path, {
-    method: "GET",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": getToken()
-    },
-  });
-  return response.json();
+const axiosRequest = axios.create({
+  baseURL: rootPath,
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  withCredentials: true,
+  timeout: 300000,
+  transformRequest: [function (data) {
+    return JSON.stringify(data)
+  }]
+})
+
+export async function getRequest(path = "", headers = {}) {
+  const response = await axiosRequest({
+    url: path,
+    method: 'GET',
+    headers
+  })
+
+  if (response.status == 200) {
+    return response.data;
+  } else {
+    return Promise.reject("Invalid response");
+  }
 }
 
-export async function postRequest(path = "", data: BodyInit) {
-  const response = await fetch(rootPath + path, {
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    body: data,
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": getToken()
-    },
-  });
-
-  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-  return await response.json();
-}
-
-const getToken = () => {
-  if (typeof window !== 'undefined') {
-    const token = localStorage.getItem('donationAppToken')
-    console.log("!!!!!!!!!!!!", token)
-    return localStorage.getItem('donationAppToken')
+export async function postRequest(path = "", data, headers = {}) {
+  try {
+    const response = await axiosRequest({
+      url: path,
+      method: 'POST',
+      data: JSON.parse(data),
+      headers
+    });
+    
+    return response.data;
+  } catch (err) {
+    if (err.response) {
+      // ✅ log status code here
+      console.log(err.response.status);
+      console.log(err.message);
+      console.log(err.response.headers); // 👉️ {... response headers here}
+      console.log(err.response.data); // 👉️ {... response data here}
+    }
   }
 }

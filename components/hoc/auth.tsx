@@ -9,6 +9,7 @@ async function getUser() {
     .then((data) => {
       userData = data
     })
+    .catch(()=> false)
 
   return userData;
 }

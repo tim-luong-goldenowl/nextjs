@@ -1,4 +1,4 @@
-// 'use server'
+'use server'
 
 import { cookies } from 'next/headers'
 import { SyntheticEvent, useState } from 'react';
@@ -29,9 +29,17 @@ export default function Register() {
             password,
         }
         const a = await postRequest('/auth/signin', JSON.stringify(jsonBody))
-            .then((data) => {
+            .then(async (data) => {
                 const token = data.token;
-                cookies().set('name', 'lee')
+                fetch('/api/login', {
+                    method: 'post',
+                    headers: {
+                        "Content-Type": 'application/json',
+                    },
+                    body: JSON.stringify({
+                        token
+                    })
+                })
             })
             .catch((e) => {
                 console.log("@@@@@@@@@@@", e)
