@@ -28,7 +28,9 @@ export async function postRequest(path = "", data: BodyInit) {
       "Authorization": getToken()
     },
   });
-  return response.json();
+
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+  return await response.json();
 }
 
 const getToken = () => {

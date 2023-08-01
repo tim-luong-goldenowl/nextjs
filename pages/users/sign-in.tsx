@@ -1,5 +1,22 @@
+// 'use server'
+
+import { cookies } from 'next/headers'
 import { SyntheticEvent, useState } from 'react';
-import { postRequest } from '../../ultils/httpRequests';
+import { getRequest, postRequest } from '../../ultils/httpRequests';
+
+// export async function getServerSideProps() {
+//     const res = await getRequest('/donation-receivers')
+//         .then((data) => {
+//             return data
+//         })
+
+//     return {
+//         props: {
+//             donationReceiverList: res
+//         }
+//     }
+// }
+
 
 export default function Register() {
     const [email, setEmail] = useState('')
@@ -11,19 +28,16 @@ export default function Register() {
             email,
             password,
         }
-        const res = await postRequest('/auth/signin', JSON.stringify(jsonBody))
+        const a = await postRequest('/auth/signin', JSON.stringify(jsonBody))
             .then((data) => {
                 const token = data.token;
-                localStorage.setItem("donationAppToken", 'Bearer ' + token);
+                cookies().set('name', 'lee')
             })
             .catch((e) => {
+                console.log("@@@@@@@@@@@", e)
             })
 
-        return {
-            props: {
-                donationReceiverList: res
-            }
-        }
+        return a;
     }
 
     return (

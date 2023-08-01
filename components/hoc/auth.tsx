@@ -1,24 +1,28 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { getRequest } from '../../ultils/httpRequests'
 
 async function getUser() {
-  try {
-    return false
-  } catch (error) {
-    return false
-  }
+  let userData = undefined
+
+  await getRequest('/users/me')
+    .then((data) => {
+      userData = data
+    })
+
+  return userData;
 }
 
 function withAuthen(C: React.FunctionComponent) {
   return (props) => {
     const router = useRouter();
     const [loggedin, setLoggedIn] = useState(false)
-  
+
     useEffect(() => {
       (async () => {
         const isLoggedIn = await getUser()
-  
-        if(!isLoggedIn) {
+
+        if (!isLoggedIn) {
           setLoggedIn(false)
           router.push('/users/sign-in')
           return
@@ -27,8 +31,8 @@ function withAuthen(C: React.FunctionComponent) {
         }
       })()
     }, [])
-  
-    if(loggedin) {
+
+    if (loggedin) {
       return <C {...props} />;
     }
   }

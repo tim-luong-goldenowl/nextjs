@@ -8,12 +8,8 @@ export default function Home({donationReceiverList}) {
   return (
     <>
       <Head>
-        <title>Donation App | Donation Receivers</title>
+        <title>Donation App</title>
       </Head>
-
-      <div className='donation-receiver-list'>
-          
-      </div>
     </>
   )
 }
